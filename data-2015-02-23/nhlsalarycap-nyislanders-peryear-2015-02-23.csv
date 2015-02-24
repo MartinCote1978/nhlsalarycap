@@ -1,27 +1,27 @@
-PLAYER,POS.,2014,2015,2016,2017,2018
-John Tavares,C,"$5,500,000 ","$5,500,000 ","$5,500,000 ","$5,500,000 ",UFA
-Mikhail Grabovski,C,"$5,000,000 ","$5,000,000 ","$5,000,000 ","$5,000,000 ",UFA
-Lubomir Visnovsky,D,"$4,750,000 ",UFA,-,-,-
-Jaroslav Halak,G,"$4,500,000 ","$4,500,000 ","$4,500,000 ","$4,500,000 ",UFA
-Nikolai Kulemin,LW,"$4,187,500 ","$4,187,500 ","$4,187,500 ","$4,187,500 ",UFA
-Travis Hamonic,D,"$3,857,143 ","$3,857,143 ","$3,857,143 ","$3,857,143 ","$3,857,143 "
-Johnny Boychuk,D,"$3,366,667 ",UFA,-,-,-
-Josh Bailey,LW,"$3,300,000 ","$3,300,000 ","$3,300,000 ","$3,300,000 ",UFA
-Michael Grabner,RW,"$3,000,000 ","$3,000,000 ",UFA,-,-
-Kyle Okposo,RW,"$2,800,000 ","$2,800,000 ",UFA,-,-
-Cal Clutterbuck,RW,"$2,750,000 ","$2,750,000 ","$2,750,000 ",UFA,-
-Frans Nielsen,C,"$2,750,000 ","$2,750,000 ",UFA,-,-
-Nick Leddy,D,"$2,700,000 ",RFA,-,-,-
-Calvin de Haan,D,"$1,966,666 ","$1,966,666 ","$1,966,668 ",RFA,-
-Chad Johnson,G,"$1,300,000 ","$1,300,000 ",UFA,-,-
-Casey Cizikas,C,"$1,000,000 ","$1,000,000 ",RFA,-,-
-Matt Martin,LW,"$1,000,000 ","$1,000,000 ",UFA,-,-
-Brock Nelson,C,"$900,000 ",RFA,-,-,-
-Ryan Strome,C,"$863,333 ","$863,333 ",RFA,-,-
-Matt Donovan,D,"$826,875 ",RFA,-,-,-
-Anders Lee,C,"$786,483 ",RFA,-,-,-
-Brian Strait,D,"$775,000 ","$775,000 ",UFA,-,-
-Thomas Hickey,D,"$675,000 ",RFA,-,-,-
-Eric Boulton,LW,"$650,000 ",UFA,-,-,-
-Colin McDonald,RW,"$27,493 ",UFA,-,-,-
-Marc Cantin,D,-,-,-,-,-
+PLAYER,POS.,2014,2015,2016,2017,2018,X
+John Tavares,C,"$5,500,000 ","$5,500,000 ","$5,500,000 ","$5,500,000 ",UFA,
+Mikhail Grabovski,C,"$5,000,000 ","$5,000,000 ","$5,000,000 ","$5,000,000 ",UFA,
+Lubomir Visnovsky,D,"$4,750,000 ",UFA,-,-,-,
+Jaroslav Halak,G,"$4,500,000 ","$4,500,000 ","$4,500,000 ","$4,500,000 ",UFA,
+Nikolai Kulemin,LW,"$4,187,500 ","$4,187,500 ","$4,187,500 ","$4,187,500 ",UFA,
+Travis Hamonic,D,"$3,857,143 ","$3,857,143 ","$3,857,143 ","$3,857,143 ","$3,857,143 ",
+Johnny Boychuk,D,"$3,366,667 ",UFA,-,-,-,
+Josh Bailey,LW,"$3,300,000 ","$3,300,000 ","$3,300,000 ","$3,300,000 ",UFA,
+Michael Grabner,RW,"$3,000,000 ","$3,000,000 ",UFA,-,-,
+Kyle Okposo,RW,"$2,800,000 ","$2,800,000 ",UFA,-,-,
+Cal Clutterbuck,RW,"$2,750,000 ","$2,750,000 ","$2,750,000 ",UFA,-,
+Frans Nielsen,C,"$2,750,000 ","$2,750,000 ",UFA,-,-,
+Nick Leddy,D,"$2,700,000 ",RFA,-,-,-,
+Calvin de Haan,D,"$1,966,666 ","$1,966,666 ","$1,966,668 ",RFA,-,
+Chad Johnson,G,"$1,300,000 ","$1,300,000 ",UFA,-,-,
+Casey Cizikas,C,"$1,000,000 ","$1,000,000 ",RFA,-,-,
+Matt Martin,LW,"$1,000,000 ","$1,000,000 ",UFA,-,-,
+Brock Nelson,C,"$900,000 ",RFA,-,-,-,
+Ryan Strome,C,"$863,333 ","$863,333 ",RFA,-,-,
+Matt Donovan,D,"$826,875 ",RFA,-,-,-,
+Anders Lee,C,"$786,483 ",RFA,-,-,-,
+Brian Strait,D,"$775,000 ","$775,000 ",UFA,-,-,
+Thomas Hickey,D,"$675,000 ",RFA,-,-,-,
+Eric Boulton,LW,"$650,000 ",UFA,-,-,-,
+Colin McDonald,RW,"$27,493 ",UFA,-,-,-,
+Marc Cantin,D,-,-,-,-,-,
