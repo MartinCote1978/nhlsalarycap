@@ -2,6 +2,7 @@
 
 library(dplyr)
 library(tidyr)
+library(lubridate)
 
 ## Constants
 data_folder <- "data-"
@@ -65,19 +66,43 @@ readTeamSrcData <- function(team_name) {
 
 nhl_salaries <- readTeamSrcData(teams[1])
 for(i in 2:length(teams)) {
-  nhl_salaries <- nhl_salaries %>% union(readTeamSrcData(teams[i]))
+  nhl_salaries <- nhl_salaries %>% bind_rows(readTeamSrcData(teams[i]))
 }
 
-#View(nhl_salaries)
-nhl_salaries
+## Pre-Conditions steps:
+### 1. To separate contract.terms, no NA is allowed.  For those, insert value "0 yr$0".
+nhl_salaries[is.na(nhl_salaries$CONTRACT.TERMS), ]$CONTRACT.TERMS <- "0 yr$0"
+### 2. Replace ' yr$' with '__' to use the dplyr:separate functions later
+nhl_salaries$CONTRACT.TERMS <- sub(" yr\\$", "__", nhl_salaries$CONTRACT.TERMS)
 
 ## Clean/Tidy up
-### 1. Separate contract terms
-### 2. switch all dollars amount to actual numbers type
-### 3. switch the expires to Date-Year type
-### 4. Switch years (2014, 2015, 2016, 2017, 2018) variable as one variable ('problem 3')
-### 5. Add the years after 2018 indicated by contract expiration date-year, when applicable.
-### 6. Add the years before 2014 indicated by contract length, when applicable.
+nhl_salaries_tidy <- nhl_salaries %>%
+### 1. Separate contract terms  
+  separate(col=CONTRACT.TERMS, into=c("CONTRACTLENGTH", "CONTRACTAMOUNT"), sep="__") %>%
+  mutate(CONTRACTLENGTH = as.numeric(CONTRACTLENGTH)) %>%
+  mutate(CONTRACTAMOUNT = extract_numeric(CONTRACTAMOUNT)) %>%
+### 2. switch the expires to numeric type
+  mutate(EXPIRES = as.numeric(EXPIRES)) %>%
+### 3. Switch years (2014, 2015, 2016, 2017, 2018) variable as one variable ('problem 1')
+  gather(SEASON, AMTPERYEAR, X2014:X2018, na.rm=FALSE) %>%
+  mutate(SEASON = extract_numeric(SEASON)) %>%
+### 4. Extract contract type and status at the end of the contract
+  # necessary??
+  #mutate(AMTPERYEAR = extract_numeric(AMTPERYEAR)) %>%
+### 5. switch all dollars amount to actual numbers type
+  mutate(AVGSALARY = extract_numeric(AVG..SALARY)) %>%
+### 6. Add the years after 2018 indicated by contract expiration date-year, when applicable.
+  # necessary??
+### 7. Add the years before 2014 indicated by contract length, when applicable.
+  # necessary??
+  select(-c(POS..y, AVG..SALARY))
 
 
-# Q: What is the average salary for 2014?
+# Q: What is the average salary for 2014, by team?
+nhl_2014_avgsalaries <- nhl_salaries_tidy %>%
+  group_by(TEAM, SEASON) %>%
+  summarise(AVGSALARYSEASON = mean(AVGSALARY, na.rm=TRUE)) %>%
+  filter(SEASON == 2014) %>%
+  ungroup() %>%
+  arrange(desc(AVGSALARYSEASON))
+View(nhl_2014_avgsalaries)
