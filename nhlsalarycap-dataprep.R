@@ -71,6 +71,13 @@ for(i in 2:length(teams)) {
 #View(nhl_salaries)
 nhl_salaries
 
-## Clean up
+## Clean/Tidy up
+### 1. Separate contract terms
+### 2. switch all dollars amount to actual numbers type
+### 3. switch the expires to Date-Year type
+### 4. Switch years (2014, 2015, 2016, 2017, 2018) variable as one variable ('problem 3')
+### 5. Add the years after 2018 indicated by contract expiration date-year, when applicable.
+### 6. Add the years before 2014 indicated by contract length, when applicable.
+
 
 # Q: What is the average salary for 2014?

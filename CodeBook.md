@@ -1,8 +1,8 @@
 #
 
-PlayerID
+Player
 
-TeamID
+Team
 
 Season
 
