@@ -65,6 +65,84 @@ readTeamSrcData <- function(team_name) {
   team_salaries
 }
 
+insertMissingContractYears <- function(max_season,
+                                       player,
+                                       pos,
+                                       x,
+                                       age,
+                                       exp,
+                                       contractlength,
+                                       contractamount,
+                                       expires,
+                                       team,
+                                       season,
+                                       amtperyear,
+                                       avgsalary,
+                                       amtperyear_int,
+                                       years_left) {
+  contract_years <- tbl_df(data.frame(player,
+                                      pos,
+                                      "",
+                                      age,
+                                      exp,
+                                      contractlength,
+                                      contractamount,
+                                      expires,
+                                      team,
+                                      (max_season + 1),
+                                      amtperyear,
+                                      avgsalary,
+                                      amtperyear_int,
+                                      years_left))
+  names(contract_years) <-  c("PLAYER",
+                              "POS..x",
+                              "X",
+                              "AGE",
+                              "EXP.",
+                              "CONTRACTLENGTH",
+                              "CONTRACTAMOUNT",
+                              "EXPIRES",
+                              "TEAM",
+                              "SEASON",
+                              "AMTPERYEAR",
+                              "AVGSALARY",
+                              "AMTPERYEAR_INT",
+                              "YEARS_LEFT")
+  
+  for(i in 2:years_left) {
+    tmp <- tbl_df(data.frame(player,
+                             pos,
+                             "",
+                             age,
+                             exp,
+                             contractlength,
+                             contractamount,
+                             expires,
+                             team,
+                             (max_season + as.numeric(i)),
+                             amtperyear,
+                             avgsalary,
+                             amtperyear_int,
+                             years_left))
+    names(tmp) <-  c("PLAYER",
+                     "POS..x",
+                     "X",
+                     "AGE",
+                     "EXP.",
+                     "CONTRACTLENGTH",
+                     "CONTRACTAMOUNT",
+                     "EXPIRES",
+                     "TEAM",
+                     "SEASON",
+                     "AMTPERYEAR",
+                     "AVGSALARY",
+                     "AMTPERYEAR_INT",
+                     "YEARS_LEFT")
+    contract_years <- bind_rows(contract_years, tmp)
+  }
+  contract_years
+}
+
 nhl_salaries <- readTeamSrcData(teams[1])
 for(i in 2:length(teams)) {
   nhl_salaries <- nhl_salaries %>% bind_rows(readTeamSrcData(teams[i]))
@@ -92,23 +170,32 @@ nhl_salaries_tidy <- nhl_salaries %>%
 ### 5. Remove the duplicate column 'POS..y' and no longer necessary AVG..SALARY (replaced by step 4)
   select(-c(POS..y, AVG..SALARY))
 
-### Export the data to a file for future use (i.e. analytics)
-nhl_salaries_tidy %>%
-  write.csv(file="nhl_salaries_tidy.csv", row.names=FALSE, col.names=TRUE)
-
-
+### 6. Add the years after 2018 indicated by contract expiration date-year, when applicable.
+nhl_salaries_tidy_tmp <- nhl_salaries_tidy %>%
+  mutate(AMTPERYEAR_INT = extract_numeric(AMTPERYEAR)) %>%
+  filter(!is.na(AMTPERYEAR_INT)) %>%
+  mutate(YEARS_LEFT = EXPIRES - max(SEASON)) %>%
+  bind_rows(insertMissingContractYears(max(SEASON), # ERROR unable to find the data by 'SEASON', etc.
+                                       PLAYER,
+                                       POS..x,
+                                       X,
+                                       AGE,
+                                       EXP.,
+                                       CONTRACTLENGTH,
+                                       CONTRACTAMOUNT,
+                                       EXPIRES,
+                                       TEAM,
+                                       SEASON,
+                                       AMTPERYEAR,
+                                       AVGSALARY,
+                                       AMTPERYEAR_INT,
+                                       YEARS_LEFT))
+  
 ### 4. Extract contract type and status at the end of the contract
 # necessary??
-### 6. Add the years after 2018 indicated by contract expiration date-year, when applicable.
 ### 7. Add the years before 2014 indicated by contract length, when applicable.
 # necessary??
 
-
-# Q: What is the average salary for 2014, by team?
-nhl_2014_avgsalaries <- nhl_salaries_tidy %>%
-  group_by(TEAM, SEASON) %>%
-  summarise(AVGSALARYSEASON = mean(AVGSALARY, na.rm=TRUE)) %>%
-  filter(SEASON == 2014) %>%
-  ungroup() %>%
-  arrange(desc(AVGSALARYSEASON))
-View(nhl_2014_avgsalaries)
+### Export the data to a file for future use (i.e. analytics)
+nhl_salaries_tidy %>%
+  write.csv(file="nhl_salaries_tidy.csv", row.names=FALSE, col.names=TRUE)
