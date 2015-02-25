@@ -56,7 +56,8 @@ readTeamSrcData <- function(team_name) {
                                                  "character", # CONTRACT TERMS
                                                  "character", # AVG. SALARY
                                                  "character"), # EXPIRES
-                                    stringsAsFactors=FALSE)
+                                    stringsAsFactors=FALSE,
+                                    fileEncoding="latin1")
                            )
   team_salaries <- team_peryear %>%
     left_join(team_contracts, by="PLAYER") %>%
@@ -86,16 +87,21 @@ nhl_salaries_tidy <- nhl_salaries %>%
 ### 3. Switch years (2014, 2015, 2016, 2017, 2018) variable as one variable ('problem 1')
   gather(SEASON, AMTPERYEAR, X2014:X2018, na.rm=FALSE) %>%
   mutate(SEASON = extract_numeric(SEASON)) %>%
-### 4. Extract contract type and status at the end of the contract
-  # necessary??
-  #mutate(AMTPERYEAR = extract_numeric(AMTPERYEAR)) %>%
-### 5. switch all dollars amount to actual numbers type
+### 4. switch all dollars amount to actual numbers type
   mutate(AVGSALARY = extract_numeric(AVG..SALARY)) %>%
-### 6. Add the years after 2018 indicated by contract expiration date-year, when applicable.
-  # necessary??
-### 7. Add the years before 2014 indicated by contract length, when applicable.
-  # necessary??
+### 5. Remove the duplicate column 'POS..y' and no longer necessary AVG..SALARY (replaced by step 4)
   select(-c(POS..y, AVG..SALARY))
+
+### Export the data to a file for future use (i.e. analytics)
+nhl_salaries_tidy %>%
+  write.csv(file="nhl_salaries_tidy.csv", row.names=FALSE, col.names=TRUE)
+
+
+### 4. Extract contract type and status at the end of the contract
+# necessary??
+### 6. Add the years after 2018 indicated by contract expiration date-year, when applicable.
+### 7. Add the years before 2014 indicated by contract length, when applicable.
+# necessary??
 
 
 # Q: What is the average salary for 2014, by team?
