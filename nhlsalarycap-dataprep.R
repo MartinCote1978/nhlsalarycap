@@ -106,7 +106,9 @@ nhl_salaries_tidy <- nhl_salaries %>%
 ### 6. switch all dollars amount to actual numbers type
   mutate(AVGSALARY = extract_numeric(AVG..SALARY)) %>%
 ### 8. Add the years before 2014 indicated by contract length, when applicable.
-# necessary??
+### necessary??  For visual display (i.e. on web), no.  For statistics & analytics, yes.  However, useless to have
+### only at best a few years back before 2014.  Need to find another data source to obtain salaries prior to
+### 2014 season.
 ### 7. Table Cleanup: Remove the duplicate column 'POS..y' and no longer necessary AVG..SALARY (replaced by step 4)
   select(-c(POS..y, AVG..SALARY, PLAYERSTATUS_TMP)) %>%
   rename(POS = POS..x) %>%
