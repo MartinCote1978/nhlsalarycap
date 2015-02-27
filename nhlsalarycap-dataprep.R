@@ -84,7 +84,7 @@ nhl_salaries_tidy <- nhl_salaries %>%
   mutate(CONTRACTAMOUNT = extract_numeric(CONTRACTAMOUNT)) %>%
 ### 2. switch the expires to numeric type
   mutate(EXPIRES = as.numeric(EXPIRES)) %>%
-### 3.1 Add the years after 2018 indicated by contract expiration date-year, when applicable.
+### 3. Add the years after 2018 indicated by contract expiration date-year, when applicable.
   mutate(X2019 = ifelse(EXPIRES >= 2019, AVG..SALARY, "-")) %>%
   mutate(X2020 = ifelse(EXPIRES >= 2020, AVG..SALARY, "-")) %>%
   mutate(X2021 = ifelse(EXPIRES >= 2021, AVG..SALARY, "-")) %>%
@@ -96,17 +96,21 @@ nhl_salaries_tidy <- nhl_salaries %>%
   select(PLAYER, POS..x, X2014, X2015, X2016, X2017, X2018, X2019, X2020, X2021, X2022, X2023, X2024, X2025, X2026, X, POS..y, AGE, EXP., CONTRACTLENGTH, CONTRACTAMOUNT, AVG..SALARY, EXPIRES, TEAM) %>%
 ### 4. Switch years (2014, 2015, 2016, 2017, 2018) variable as one variable ('common problem 1')
   gather(SEASON, AMTPERYEAR, X2014:X2026, na.rm=FALSE) %>%
-  mutate(AMTPERYEAR_INT = extract_numeric(AMTPERYEAR)) %>%
   mutate(SEASON = extract_numeric(SEASON)) %>%
-### 5. switch all dollars amount to actual numbers type
+### 5. Extract contract type and status at the end of the contract
+  mutate(PLAYERSTATUS_TMP = ifelse(AMTPERYEAR == "UFA" | AMTPERYEAR == "RFA", AMTPERYEAR, NA) ) %>%
+  group_by(PLAYER) %>%
+  mutate(PLAYERSTATUS = PLAYERSTATUS_TMP[!is.na(PLAYERSTATUS_TMP)][1] ) %>%
+  ungroup() %>%
+  mutate(AMTPERYEAR_INT = extract_numeric(AMTPERYEAR)) %>%
+### 6. switch all dollars amount to actual numbers type
   mutate(AVGSALARY = extract_numeric(AVG..SALARY)) %>%
-### 6. Remove the duplicate column 'POS..y' and no longer necessary AVG..SALARY (replaced by step 4)
-  select(-c(POS..y, AVG..SALARY)) %>%
-### 4. Extract contract type and status at the end of the contract
+### 8. Add the years before 2014 indicated by contract length, when applicable.
 # necessary??
+### 7. Table Cleanup: Remove the duplicate column 'POS..y' and no longer necessary AVG..SALARY (replaced by step 4)
+  select(-c(POS..y, AVG..SALARY, PLAYERSTATUS_TMP)) %>%
+  rename(POS = POS..x) %>%
   filter(!is.na(AMTPERYEAR_INT))
-### 7. Add the years before 2014 indicated by contract length, when applicable.
-# necessary??
 
 ### Export the data to a file for future use (i.e. analytics)
 nhl_salaries_tidy %>%
