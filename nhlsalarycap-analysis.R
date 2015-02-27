@@ -24,3 +24,12 @@ nhl_2015_teamsalaries <- nhl_salaries_tidy %>%
   ungroup() %>%
   arrange(desc(TOTAL_SEASON))
 View(nhl_2015_teamsalaries)
+
+# Q: What is the average committed amount for salary for each season, by team?
+nhl_2014_totsalarycommitted <- nhl_salaries_tidy %>%
+  group_by(TEAM, SEASON) %>%
+  summarise(TOTALSALARYCOMMITTED = sum(AMTPERYEAR_INT, na.rm=TRUE)) %>%
+  arrange(desc(TOTALSALARYCOMMITTED))
+#View(nhl_2014_avgsalaries)
+nhl_2014_totsalarycommitted %>%
+  write.csv(file="nhl_2014_totsalarycommitted.csv", row.names=FALSE)
