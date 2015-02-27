@@ -85,14 +85,14 @@ nhl_salaries_tidy <- nhl_salaries %>%
 ### 2. switch the expires to numeric type
   mutate(EXPIRES = as.numeric(EXPIRES)) %>%
 ### 3. Add the years after 2018 indicated by contract expiration date-year, when applicable.
-  mutate(X2019 = ifelse(EXPIRES >= 2019, AVG..SALARY, "-")) %>%
-  mutate(X2020 = ifelse(EXPIRES >= 2020, AVG..SALARY, "-")) %>%
-  mutate(X2021 = ifelse(EXPIRES >= 2021, AVG..SALARY, "-")) %>%
-  mutate(X2022 = ifelse(EXPIRES >= 2022, AVG..SALARY, "-")) %>%
-  mutate(X2023 = ifelse(EXPIRES >= 2023, AVG..SALARY, "-")) %>%
-  mutate(X2024 = ifelse(EXPIRES >= 2024, AVG..SALARY, "-")) %>%
-  mutate(X2025 = ifelse(EXPIRES >= 2025, AVG..SALARY, "-")) %>%
-  mutate(X2026 = ifelse(EXPIRES >= 2026, AVG..SALARY, "-")) %>%
+  mutate(X2019 = ifelse(EXPIRES > 2019, AVG..SALARY, "-")) %>%
+  mutate(X2020 = ifelse(EXPIRES > 2020, AVG..SALARY, "-")) %>%
+  mutate(X2021 = ifelse(EXPIRES > 2021, AVG..SALARY, "-")) %>%
+  mutate(X2022 = ifelse(EXPIRES > 2022, AVG..SALARY, "-")) %>%
+  mutate(X2023 = ifelse(EXPIRES > 2023, AVG..SALARY, "-")) %>%
+  mutate(X2024 = ifelse(EXPIRES > 2024, AVG..SALARY, "-")) %>%
+  mutate(X2025 = ifelse(EXPIRES > 2025, AVG..SALARY, "-")) %>%
+  mutate(X2026 = ifelse(EXPIRES > 2026, AVG..SALARY, "-")) %>%
   select(PLAYER, POS..x, X2014, X2015, X2016, X2017, X2018, X2019, X2020, X2021, X2022, X2023, X2024, X2025, X2026, X, POS..y, AGE, EXP., CONTRACTLENGTH, CONTRACTAMOUNT, AVG..SALARY, EXPIRES, TEAM) %>%
 ### 4. Switch years (2014, 2015, 2016, 2017, 2018) variable as one variable ('common problem 1')
   gather(SEASON, AMTPERYEAR, X2014:X2026, na.rm=FALSE) %>%
