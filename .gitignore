@@ -50,3 +50,4 @@ Temporary Items
 
 nhl_salaries_tidy.csv
 .Rhistory
+*.Rhistory

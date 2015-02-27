@@ -11,4 +11,16 @@ nhl_2014_avgsalaries <- nhl_salaries_tidy %>%
   filter(SEASON == 2014) %>%
   ungroup() %>%
   arrange(desc(AVGSALARYSEASON))
-View(nhl_2014_avgsalaries)
+#View(nhl_2014_avgsalaries)
+nhl_2014_avgsalaries %>%
+  write.csv(file="nhl_2014_avgsalaries.csv", row.names=FALSE)
+
+
+# Q: What is the amount of money currently under contracts for each team in 2015?
+nhl_2015_teamsalaries <- nhl_salaries_tidy %>%
+  group_by(TEAM, SEASON) %>%
+  summarise(TOTAL_SEASON = sum(AVGSALARY, na.rm=TRUE)) %>%
+  filter(SEASON == 2015) %>%
+  ungroup() %>%
+  arrange(desc(TOTAL_SEASON))
+View(nhl_2015_teamsalaries)
