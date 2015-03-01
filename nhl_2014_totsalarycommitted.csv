@@ -40,8 +40,8 @@
 "carolina",2020,6e+06
 "carolina",2021,6e+06
 "carolina",2022,6e+06
-"chicago",2015,86882629
 "chicago",2014,82260805
+"chicago",2015,86882629
 "chicago",2016,73707629
 "chicago",2017,62913462
 "chicago",2018,62913462
@@ -57,8 +57,8 @@
 "colorado",2019,5571429
 "colorado",2020,5571429
 "columbus",2014,74994130
-"columbus",2016,68582143
 "columbus",2015,67676309
+"columbus",2016,68582143
 "columbus",2017,56457143
 "columbus",2018,47600000
 "columbus",2019,16650000
@@ -98,8 +98,8 @@
 "losangeles",2020,25822727
 "losangeles",2021,16947727
 "losangeles",2022,5800000
-"minnesota",2015,72219190
 "minnesota",2014,64410791
+"minnesota",2015,72219190
 "minnesota",2016,59326923
 "minnesota",2017,50160256
 "minnesota",2018,43410256
@@ -144,8 +144,8 @@
 "nyislanders",2018,3857143
 "nyislanders",2019,3857143
 "nyrangers",2014,72783384
-"nyrangers",2016,47913333
 "nyrangers",2015,45888333
+"nyrangers",2016,47913333
 "nyrangers",2017,45800000
 "nyrangers",2018,35100000
 "nyrangers",2019,19700000
@@ -189,8 +189,8 @@
 "stlouis",2017,20025000
 "stlouis",2018,11900000
 "stlouis",2019,6500000
-"tampabay",2015,71072143
 "tampabay",2014,71071122
+"tampabay",2015,71072143
 "tampabay",2016,51785833
 "tampabay",2017,25400000
 "tampabay",2018,10300000
