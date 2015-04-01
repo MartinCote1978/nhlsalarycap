@@ -34,3 +34,17 @@ nhl_2014_totsalarycommitted %>%
   write.csv(file="nhl_2014_totsalarycommitted.csv", row.names=FALSE)
 ## Used Excel to format and bring the seasons as column headers.
 
+# Q: How much money was saved versus invested by the seller/buyer team?
+
+
+# Q: What is the average amount of salary committed by position
+#    (group 1=(RW, C, LW), group 2=(D), group 3=(G)) as well as for how many
+#    players by team, by year?
+nhl_totsalarycommittedbyposition <- nhl_salaries_tidy %>%
+  mutate(POS_GROUP = ifelse(POS %in% c("RW", "LW", "C", "D"), ifelse(POS %in% c("RW", "LW", "C"), "F", "D"), "G" )) %>%
+  group_by(TEAM, POS_GROUP, SEASON) %>%
+  mutate(PLAYERCOUNT = count(PLAYER) ) %>%
+  summarise(TOTALSALARYCOMMITTEDBYPOS = sum(AMTPERYEAR_INT, na.rm=TRUE))
+nhl_totsalarycommittedbyposition %>%
+  write.csv(file="nhl_totsalarycommittedbyposition.csv", row.names=FALSE)
+
